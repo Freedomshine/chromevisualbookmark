@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能书签浏览器</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0">
+</head>
+<body>
+  <div class="app-container">
+    <!-- 左侧边栏 -->
+    <aside class="sidebar">
+      <div class="sidebar-header" id="sidebarHeader">
+        <span class="material-symbols-rounded sidebar-icon">bookmarks</span>
+        <h2>书签导航</h2>
+      </div>
+      <div class="sidebar-search">
+        <div class="search-input-container">
+          <span class="material-symbols-rounded search-icon">search</span>
+          <input type="text" id="searchBox" placeholder="搜索书签...">
+        </div>
+      </div>
+      <div class="breadcrumbs-navigation">
+        <!-- 面包屑导航将在这里动态生成 -->
+      </div>
+      <div class="sidebar-content">
+        <!-- 侧边栏导航内容将在这里动态生成 -->
+      </div>
+    </aside>
+    
+    <!-- 主内容区 -->
+    <main class="main-content">
+      <div class="content-header">
+        <h1 class="current-folder-title">我的书签</h1>
+        <div class="view-controls">
+          <button class="view-button active" data-view="grid">
+            <span class="material-symbols-rounded">grid_view</span>
+          </button>
+          <button class="view-button" data-view="list">
+            <span class="material-symbols-rounded">view_list</span>
+          </button>
+        </div>
+      </div>
+      <div id="bookmarkTree" class="bookmark-content">
+        <!-- 书签内容将在这里动态生成 -->
+      </div>
+    </main>
+  </div>
+  <script src="js/bookmarks.js"></script>
+</body>
+</html> 
