@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "Visual Bookmark Tree",
-  "version": "1.0",
-  "description": "显示Chrome书签的树状结构",
-  "permissions": ["bookmarks"],
-  "host_permissions": ["https://www.google.com/"],
+  "name": "浮岛书签 Visual Bookmark",
+  "version": "2.0.0",
+  "description": "玻璃质感的可视化书签整理工具：多个文件夹并排打开，拖拽归位，找出重复书签。",
+  "permissions": ["bookmarks", "favicon"],
   "action": {
+    "default_title": "浮岛书签",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "images/icon16.png",
@@ -18,4 +18,4 @@
     "48": "images/icon48.png",
     "128": "images/icon128.png"
   }
-} 
+}

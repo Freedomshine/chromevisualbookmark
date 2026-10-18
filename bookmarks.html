@@ -1,52 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>智能书签浏览器</title>
+  <title>浮岛书签</title>
+  <link rel="icon" href="images/icon48.png">
+  <link rel="stylesheet" href="css/theme.css">
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0">
 </head>
-<body>
-  <div class="app-container">
-    <!-- 左侧边栏 -->
-    <aside class="sidebar">
-      <div class="sidebar-header" id="sidebarHeader">
-        <span class="material-symbols-rounded sidebar-icon">bookmarks</span>
-        <h2>书签导航</h2>
+<body class="booting">
+  <div class="scene" id="scene" aria-hidden="true"></div>
+
+  <div class="app">
+    <aside class="sidebar glass" id="sidebar" aria-label="导航">
+      <button class="brand" data-act="go" data-view="overview" title="回到总览">
+        <span class="brand-mark" id="brandMark"></span>
+        <span class="brand-text"><b>浮岛书签</b><small>可视化书签整理</small></span>
+      </button>
+
+      <nav class="nav" aria-label="视图">
+        <button class="nav-item" data-act="go" data-view="overview">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="9" rx="1.8"/><rect x="13" y="4" width="7" height="5" rx="1.8"/><rect x="13" y="11" width="7" height="9" rx="1.8"/><rect x="4" y="15" width="7" height="5" rx="1.8"/></svg>
+          <span>书签总览</span><span class="badge" id="navTotal">0</span>
+        </button>
+        <button class="nav-item" data-act="go" data-view="workspace">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="5" height="14" rx="1.6"/><rect x="9.5" y="5" width="5" height="14" rx="1.6"/><rect x="15.5" y="5" width="5" height="14" rx="1.6"/></svg>
+          <span>整理台</span><span class="badge" id="navPanels">0</span>
+        </button>
+      </nav>
+
+      <div class="tree-head">
+        <span>文件夹</span>
+        <button class="icon-btn" data-act="collapse-all" title="全部收起" aria-label="全部收起"></button>
       </div>
-      <div class="sidebar-search">
-        <div class="search-input-container">
-          <span class="material-symbols-rounded search-icon">search</span>
-          <input type="text" id="searchBox" placeholder="搜索书签...">
+      <div class="tree" id="tree" role="tree" aria-label="书签文件夹"></div>
+
+      <div class="side-foot">
+        <button class="nav-item" data-act="settings">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>
+          <span>设置</span>
+        </button>
+        <div class="dock">
+          <button class="organize-btn" id="organizeBtn" data-act="organize" aria-pressed="false"></button>
+          <div class="dock-status">
+            <span class="status-orb" id="statusOrb"></span>
+            <span class="status-text"><b id="statusTitle"></b><small id="statusSub"></small></span>
+            <button class="icon-btn" id="undoBtn" data-act="undo" title="撤销上一步（⌘Z / Ctrl+Z）" aria-label="撤销"></button>
+            <button class="icon-btn" id="mgrBtn" data-act="chrome-manager" title="打开 Chrome 自带的书签管理器" aria-label="打开 Chrome 书签管理器"></button>
+          </div>
         </div>
-      </div>
-      <div class="breadcrumbs-navigation">
-        <!-- 面包屑导航将在这里动态生成 -->
-      </div>
-      <div class="sidebar-content">
-        <!-- 侧边栏导航内容将在这里动态生成 -->
       </div>
     </aside>
-    
-    <!-- 主内容区 -->
-    <main class="main-content">
-      <div class="content-header">
-        <h1 class="current-folder-title">我的书签</h1>
-        <div class="view-controls">
-          <button class="view-button active" data-view="grid">
-            <span class="material-symbols-rounded">grid_view</span>
-          </button>
-          <button class="view-button" data-view="list">
-            <span class="material-symbols-rounded">view_list</span>
-          </button>
+
+    <main class="main" id="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" data-act="menu" aria-label="打开侧栏"></button>
+        <div class="titles">
+          <h1 id="pageTitle">书签总览</h1>
+          <p id="pageSub"></p>
         </div>
-      </div>
-      <div id="bookmarkTree" class="bookmark-content">
-        <!-- 书签内容将在这里动态生成 -->
-      </div>
+        <div class="search" id="searchWrap">
+          <label class="search-box glass">
+            <span class="search-ic" aria-hidden="true"></span>
+            <input id="search" type="search" placeholder="搜索标题、网址、域名…" autocomplete="off" aria-label="搜索书签">
+            <kbd class="kbd" aria-hidden="true">/</kbd>
+          </label>
+          <div class="pop glass" id="searchPop" hidden></div>
+        </div>
+        <div class="insights">
+          <button class="round-btn glass" id="insightsBtn" data-act="insights" title="整理建议" aria-label="整理建议"></button>
+          <div class="pop glass insights-pop" id="insightsPop" hidden></div>
+        </div>
+        <button class="cta btn-mint" data-act="new"><span id="ctaIcon"></span>新建</button>
+      </header>
+
+      <section class="view" id="overview" aria-label="书签总览"></section>
+      <section class="view" id="workspace" aria-label="整理台" hidden></section>
     </main>
   </div>
-  <script src="js/bookmarks.js"></script>
+
+  <div class="selbar glass" id="selbar" hidden></div>
+  <div class="drag-ghost" id="dragGhost"></div>
+  <div id="modals"></div>
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
 </body>
-</html> 
+</html>
