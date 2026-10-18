@@ -135,7 +135,7 @@
 .titles h1 { font-size: clamp(28px, 2.5vw, 40px); font-weight: 800; letter-spacing: .1em; line-height: 1.15; }
 .titles p { margin-top: 8px; color: var(--ink-3); font-size: 14px; letter-spacing: .22em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-.search { position: relative; width: min(460px, 34vw); }
+.search { position: relative; width: clamp(260px, 28vw, 460px); }
 .search-box {
   display: flex; align-items: center; gap: 12px;
   height: 58px; padding: 0 14px 0 22px;
